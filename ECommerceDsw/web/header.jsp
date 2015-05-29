@@ -15,6 +15,7 @@
         <title>E Commerce</title>
     </head>
     <body>
+        <font face="verdana" size="2">
         <ul>
             <li>
                 <a href="/ECommerceDsw/">Home - Listagem de Produtos</a>
@@ -35,9 +36,13 @@
             </li>
             <%}%>
         </ul>
-        <font face="verdana" size="2">
+
+        <%if (!usuarioLogado) {%>
+        <h3 style="color: red;">Para montar seu carrinho é necessário estar logado. Utilize um dos seguintes logins: professor:professor, wendell:wendell ou cliente:cliente </h3>
+        <%}%>
+
         <%if (request.getParameter("flash") != null) {%>
         <h2 style="color: <%= (request.getParameter("kind").equals("success") ? "lightgreen" : "red")%>;"><%=request.getParameter("flash")%></h2>
         <%}%>
-        </font>
+        
 
