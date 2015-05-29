@@ -1,7 +1,7 @@
 <%-- 
     Document   : carrinho
     Created on : May 29, 2015, 2:08:15 PM
-    Author     : Marcelo
+    Author     : Wendell
 --%>
 
 <%@page import="java.net.URLEncoder"%>

@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  *
- * @author Marcelo
+ * @author Wendell
  */
 public class Util {
 

@@ -1,7 +1,7 @@
 <%-- 
     Document   : historico
     Created on : May 29, 2015, 2:12:55 PM
-    Author     : Marcelo
+    Author     : Wendell
 --%>
 
 <%@page import="java.text.SimpleDateFormat"%>
