@@ -59,59 +59,67 @@
 %>
 
 <jsp:include flush="true" page="header.jsp"></jsp:include>
-
-    <h1>Carrinho</h1>
-
     <form method="POST">
         <input type="hidden" name="action" value="adicionar_item"> 
         <input type="hidden" name="produto_id" id="produto_id" value=""> 
         <input type="hidden" name="quantidade" id="quantidade" value="">         
 
-        <table>
-            <tr>                    
-                <th>
-                    Nome
-                </th>
-                <th>
-                    Preço Unitário
-                </th>  
-                <th>
-                    Quantidade
-                </th>
-                <th>
-                    Preço
-                </th>
-            </tr>
-        <%double valorTotal = 0;%>
-        <%
-            NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
-            formatoMoeda.setCurrency(Currency.getInstance("BRL"));
+        <section class="conteudo">
 
-            for (ItemCarrinho itemPedido : items) {
-                Produto produto = itemPedido.getProduto();
-                produto = produtoDao.consultar(produto).get(0);
-        %>
-        <tr>
-            <td><%=produto.getNome()%></td>
-            <%--<td><%=produto.getCategoria().getDescricao()%></td>--%>
-            <td><%=formatoMoeda.format(produto.getValor())%></td>
-            <td>
-                <%=itemPedido.getQuantidade()%>
-                <input type="button" value="Adicionar" name="adicionar_<%=produto.getId()%>" onclick="document.getElementById('quantidade').value = 1;
-                        document.getElementById('produto_id').value = <%=produto.getId()%>;
-                        document.forms[0].submit();">
-                <input type="button" value="Remover" name="remover_<%=produto.getId()%>" onclick="document.getElementById('quantidade').value = -1;
-                        document.getElementById('produto_id').value = <%=produto.getId()%>;
-                        document.forms[0].submit();"> 
-            </td>
-            <td><%=formatoMoeda.format(itemPedido.getQuantidade() * produto.getValor())%></td>
-            <%
-                valorTotal += itemPedido.getQuantidade() * produto.getValor();
-            %>
-        <tr>
-            <%}%>
-    </table>
-    <input type="button" onclick="salvarCarrinho();" value="Ëfetivar compra">
+            <h2>Carrinho</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Preço Unitário</th>
+                        <th>Quantidade</th>
+                        <th>Preço Total (R$)</th>
+                    </tr>
+                </thead>                
+                <tbody>
+
+                <%double valorTotal = 0;%>
+                <%
+                    NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
+                    formatoMoeda.setCurrency(Currency.getInstance("BRL"));
+
+                    for (ItemCarrinho itemPedido : items) {
+                        Produto produto = itemPedido.getProduto();
+                        produto = produtoDao.consultar(produto).get(0);
+                %>
+
+                <tr>
+                    <td class="centralizado"><%=produto.getNome()%></td>
+                    <td class="centralizado"><%=formatoMoeda.format(produto.getValor())%></td>
+                    <td class="centralizado">
+                        <div class="botao"><a href="javascript:void(0)" onclick="document.getElementById('quantidade').value = -1;
+                                document.getElementById('produto_id').value = <%=produto.getId()%>;
+                                document.forms[0].submit();">Remover</a></div>
+                        <div class="containerNumero"><%=itemPedido.getQuantidade()%></div>
+                        <div class="botao"><a href="javascript:void(0)" onclick="document.getElementById('quantidade').value = 1;
+                                document.getElementById('produto_id').value = <%=produto.getId()%>;
+                                document.forms[0].submit();">Adicionar</a></div>
+                    </td>
+                    <td class="centralizado"><%=formatoMoeda.format(itemPedido.getQuantidade() * produto.getValor())%></td>
+                </tr>
+                <%
+                    valorTotal += itemPedido.getQuantidade() * produto.getValor();
+                %>
+                <%}%>                    
+                <tr>
+                    <td colspan="3" align="right"><b>Valor: </b></td>
+                    <td align="center"><b><%=formatoMoeda.format(valorTotal)%></b></td>
+                </tr>
+            </tbody>                
+        </table>    
+
+        <div class="botao"><a href="javascript:void(0)" onclick="salvarCarrinho();">Ëfetivar compra</a></div>                
+
+    </section>
+
+
+
 </form>
 <script>
 

@@ -17,7 +17,6 @@
     Comprador comprador = (Comprador) session.getAttribute("loggedUser");
     boolean isUsuarioLogado = comprador != null;
 
-
     NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
 
     formatoMoeda.setCurrency(Currency.getInstance("BRL"));
@@ -25,44 +24,53 @@
     ArrayList<Produto> produtos = pDao.consultar(new Produto());
 %>
 <jsp:include flush="true" page="header.jsp"></jsp:include>
-    <h1>Home - Listagem de Produtos</h1>
-
-    <table>
-    <% if (produtos.size()
-                != 0) {%>
-
-    <tr>                    
-        <th>
-            Nome
-        </th>
-        <th>
-            Categoria
-        </th>
-
-        <%if (isUsuarioLogado) {%>
-        <th align="right">
-            Preço Unitário
-        </th>  
-        <%}%>        
-
-    </tr>
-    <%}%>
-
     <form method="POST" action="carrinho.jsp">
         <input type="hidden" name="action" value="adicionar_item"> 
         <input type="hidden" name="produto_id" id="produto_id" value=""> 
         <input type="hidden" name="quantidade" value="1">         
-        <%for (Produto produto : produtos) {%>
-        <tr>
-            <td><%=produto.getNome()%></td>
-            <td><%=produto.getCategoria()%></td>
-            <td align="right"><%=formatoMoeda.format(produto.getValor())%></td>
-            <%if (isUsuarioLogado) {%>
-            <td><button  name="adicionar_<%=produto.getId()%>" onclick="document.getElementById('produto_id').value = <%=produto.getId()%>;
-                    document.forms[0].submit();">Adicionar no Carrinho</button></td>
-                <%}%>
-        <tr>
-            <%}%>
-            </table>
-    </form>
-    <jsp:include flush="true" page="footer.jsp"></jsp:include>
+
+        <section class="conteudo">
+
+            <h2>Listagem de Produtos</h2>
+
+
+            <table class="table">
+                <thead>
+                    <tr>                    
+                        <th>
+                            Nome
+                        </th>
+                        <th>
+                            Categoria
+                        </th>
+                    <%if (isUsuarioLogado) {%>
+                    <th >
+                        Preço Unitário
+                    </th>  
+                    <%}%>        
+                    <th align="right"></th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <%for (Produto produto : produtos) {%>
+
+                <tr>
+                    <td class="centralizado"><%=produto.getNome()%></td>
+                    <td class="centralizado"><%=produto.getCategoria()%></td>
+                    <td class="centralizado"><%=formatoMoeda.format(produto.getValor())%></td>
+                    <%if (isUsuarioLogado) {%>
+                    <td class="centralizado">
+                        <div class="botao">
+                            <a href="javascript:void(0)" onclick="document.getElementById('produto_id').value = <%=produto.getId()%>;
+                                    document.forms[0].submit();">Adicionar no Carrinho</a>
+                        </div>                        
+                    </td>
+                    <%}%>
+                <tr>
+                    <%}%>
+            </tbody>
+        </table>
+    </section>
+</form>
+<jsp:include flush="true" page="footer.jsp"></jsp:include>

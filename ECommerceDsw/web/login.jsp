@@ -25,11 +25,20 @@
     }
 %>
 <jsp:include flush="true" page="header.jsp"></jsp:include>
-<h1>Login</h1>
-    
 <form method="POST">
-    LOGIN: <input type="text" name="login"> <br>
-    SENHA: <input type="password" name="senha"> <br>
-    <input type="submit" value="REALIZAR LOGIN">
-</form>
+        <section class="conteudo">
+
+            <div class="divLogin">                        
+                <p><label for="username">Nome de usuário</label></p>
+                <p><input type="text" name="login" style="width:280px" /></p>
+                <br />  
+                <p><label for="password">Senha</label></p>
+                <p><input type="password" name="senha" style="width:280px" /></p>
+                <br />
+                <div class="botao"><a href="javascript:void(0)" onclick="document.forms[0].submit();">Login</a></div>                     
+            </div>
+</form>                    
+
+
+
 <jsp:include flush="true" page="footer.jsp"></jsp:include>

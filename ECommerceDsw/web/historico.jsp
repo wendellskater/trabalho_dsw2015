@@ -15,10 +15,10 @@
 <%@page import="dsw.operacoes.Operacoes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    
+
     NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
     formatoMoeda.setCurrency(Currency.getInstance("BRL"));
-    
+
     Comprador loggedUser = new Comprador();
     boolean usuarioLogado = false;
     if (session.getAttribute("loggedUser") != null) {
@@ -27,51 +27,62 @@
     } else {
         loggedUser = null;
     }
-    
+
     ArrayList<Carrinho> carrinhos = Operacoes.obterHistoricoDeCompras(loggedUser);
 %>
 <jsp:include flush="true" page="header.jsp"></jsp:include>
-<h1>Histórico de Compras</h1>
+    <section class="conteudo">
+        <h2>Histórico de Compras</h2>
 
-<h2>Veja histórico de suas compras</h2>
+        <h3>Veja histórico de suas compras</h3>
 
-<table>
-                <%for (Carrinho carrinho : carrinhos) {%>
-                <table width="70%" >
-                    <tr>
-                        <th align="center">#</th>
-                        <th align="center">Usuário</th>
-                        <th align="center">Data</th>
-                        <th align="right">Valor Total</th>
-                    </tr>
+        <table>
+        <%for (Carrinho carrinho : carrinhos) {%>
+        <h4>Pedido: #<%=carrinho.getId()%></h4>
 
-                    <tr>
-                        <td align="center"><%=carrinho.getId()%></td>
-                        <td align="center"><%=loggedUser.getNomeUsuario()%></td>
-                        <td align="center"><%=new SimpleDateFormat("dd/MM/yyyy").format(carrinho.getDataCompra())%></td>
-                        <td align="right"><%=formatoMoeda.format(carrinho.getValorTotal())%></td>
-                    </tr>
-                </table>
-                    <h4>Detalhe</h4>
-                <table width="70%" border="1" bordercolor="red">
-                    <tr>
-                        <th>Nome</th>
-                        <th>R$ Unitário</th>
-                        <th>Quantidade</th>
-                        <th>R$ Total</th>
-                    </tr>
-                    <%for (ItemCarrinho itemCarrinho : carrinho.getProdutosCarrinho()) {
-                    %>
-                    <tr>
-                        <td ><%=itemCarrinho.getProduto().getNome()%></td>
-                        <td ><%=formatoMoeda.format(itemCarrinho.getProduto().getValor())%></td>
-                        <td ><%=itemCarrinho.getQuantidade()%></td>
-                        <td ><%=formatoMoeda.format(itemCarrinho.getValor())%></td>
-                        
-                    </tr>
-                    <%}%>
-                </table>
-                <br><br><br><br>
+        <table class="table" >
+            <thead>
+                <tr>
+                    <th class="centralizado">#</th>
+                    <th class="centralizado">Usuário</th>
+                    <th class="centralizado">Data</th>
+                    <th class="centralizado">Valor Total</th>
+                </tr>
+            <thead>
+            <tbody>
+                <tr>
+                    <td class="centralizado"><%=carrinho.getId()%></td>
+                    <td class="centralizado"><%=loggedUser.getNomeUsuario()%></td>
+                    <td class="centralizado"><%=new SimpleDateFormat("dd/MM/yyyy").format(carrinho.getDataCompra())%></td>
+                    <td class="centralizado"><%=formatoMoeda.format(carrinho.getValorTotal())%></td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Detalhe do Pedido</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>R$ Unitário</th>
+                    <th>Quantidade</th>
+                    <th>R$ Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for (ItemCarrinho itemCarrinho : carrinho.getProdutosCarrinho()) {
+                %>
+                <tr>
+                    <td class="centralizado"><%=itemCarrinho.getProduto().getNome()%></td>
+                    <td class="centralizado"><%=formatoMoeda.format(itemCarrinho.getProduto().getValor())%></td>
+                    <td class="centralizado"><%=itemCarrinho.getQuantidade()%></td>
+                    <td class="centralizado"><%=formatoMoeda.format(itemCarrinho.getValor())%></td>
+
+                </tr>
                 <%}%>
-</table>
+            </tbody>
+        </table>
+        <br><br><br><br>
+        <%}%>
+    </table>
+</section>
 <jsp:include flush="true" page="footer.jsp"></jsp:include>

@@ -5,6 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-</font>
-</body>
+       <footer class="rodape">		    
+	|&nbsp &nbsp<a href="javascript:void(0)">Trabalho de Desenvolvimento de Software para Web</a> &nbsp &nbsp|
+	    </footer>
+
+    </body>
+
+
+
 </html>
